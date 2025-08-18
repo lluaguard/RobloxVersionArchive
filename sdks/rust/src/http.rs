@@ -50,7 +50,7 @@ pub fn get_archive_url(
     record: &RecordType,
 ) -> String {
     format!(
-        "https://raw.githubusercontent.com/grilme99/RobloxVersionArchive/main/{}/{}/{}/{}",
+        "https://raw.githubusercontent.com/zov42/RobloxVersionArchive/main/{}/{}/{}/{}",
         deployment_space.to_string(),
         binary_type.to_string(),
         channel.to_string(),
@@ -73,6 +73,6 @@ mod tests {
             &RecordType::DeployHistory,
         );
 
-        assert_eq!(archive_url, "https://raw.githubusercontent.com/grilme99/RobloxVersionArchive/main/Global/WindowsPlayer/LIVE/DeployHistory.json");
+        assert_eq!(archive_url, "https://raw.githubusercontent.com/zov42/RobloxVersionArchive/main/Global/WindowsPlayer/LIVE/DeployHistory.json");
     }
 }
