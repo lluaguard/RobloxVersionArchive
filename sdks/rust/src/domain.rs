@@ -34,9 +34,6 @@ impl ToString for PrimaryChannel {
 /// channel.
 pub const PRIMARY_CHANNELS: [PrimaryChannel; 4] = [
     PrimaryChannel::Live,
-    PrimaryChannel::ZLive,
-    PrimaryChannel::ZCanary,
-    PrimaryChannel::ZIntegration,
 ];
 
 /// All known binary types currently supported by Roblox. Open an issue if there are any more!
