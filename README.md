@@ -10,6 +10,8 @@
 
 **A simple (and safe!) to consume history of Client and Studio deployment versions.**
 
+**all credit to grilme99, https://github.com/grilme99/RobloxVersionArchive**
+
 </div>
 
 ## About
@@ -64,9 +66,9 @@ The current supported values for each are:
 
 `CHANNEL_NAME`:
 - `LIVE`
-- `zlive`
-- `zcanary`
-- `zintegration`
+- ~~`zlive`~~
+- ~~`zcanary`~~
+- ~~`zintegration`~~ (the "z" channels disabled because roblox no more allows)
 
 `RECORD`:
 - `DeployHistory.json`

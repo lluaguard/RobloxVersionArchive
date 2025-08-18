@@ -8,21 +8,17 @@ use serde::{Deserialize, Serialize};
 /// The difference between the `LIVE` and `zlive` channels is not totally clear. `LIVE` is the main release channel that
 /// should be used. `z` channels are typically internal, and `zlive` is most likely some kind of internal staging
 /// channel.
+
+/// update 18.08.2025 - roblox no more allows to check channels like ZLive, ZCanary and ZIntegration, so just live for now.
 #[derive(Debug, Deserialize, Serialize, Clone, Copy, PartialEq, PartialOrd, Hash)]
 pub enum PrimaryChannel {
     Live,
-    ZLive,
-    ZCanary,
-    ZIntegration,
 }
 
 impl ToString for PrimaryChannel {
     fn to_string(&self) -> String {
         let str = match self {
             PrimaryChannel::Live => "LIVE",
-            PrimaryChannel::ZLive => "zlive",
-            PrimaryChannel::ZCanary => "zcanary",
-            PrimaryChannel::ZIntegration => "zintegration",
         };
 
         str.to_owned()
