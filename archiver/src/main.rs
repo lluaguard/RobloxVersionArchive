@@ -52,7 +52,7 @@ async fn check_deployment_space(
             .context("Failed to create path for binary type")?;
 
         // Loop through each channel and get latest deploy info
-        let channel_name = PrimaryChannel::LIVE;
+        let channel_name = PrimaryChannel::Live;
         let channel_path = binary_type_path.join(channel_name.to_string());
         create_dir_at_path_if_new(&channel_path)
             .context("Failed to create path for channel")?;
