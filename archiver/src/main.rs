@@ -52,62 +52,61 @@ async fn check_deployment_space(
             .context("Failed to create path for binary type")?;
 
         // Loop through each channel and get latest deploy info
-        for channel_name in PRIMARY_CHANNELS {
-            let channel_path = binary_type_path.join(channel_name.to_string());
-            create_dir_at_path_if_new(&channel_path)
-                .context("Failed to create path for channel")?;
+        let channel_name = "LIVE";
+        let channel_path = binary_type_path.join(channel_name.to_string());
+        create_dir_at_path_if_new(&channel_path)
+            .context("Failed to create path for channel")?;
 
-            let deploy_history_path = channel_path.join("DeployHistory.json");
-            if !deploy_history_path.exists() {
-                fs::write(&deploy_history_path, b"{}\n").context(format!(
-                    "Failed to create an empty DeployHistory at {deploy_history_path:?}"
-                ))?
-            }
-
-            log::info!(
-                "Getting deployment info for {} {} at channel {}",
-                deployment_space.to_string(),
-                binary_type.to_string(),
-                channel_name.to_string()
-            );
-
-            let latest_deployment =
-                get_deployment_info(client, &base_url, &binary_type, &channel_name)
-                    .await
-                    .context("Failed to get latest deployment")?;
-
-            let latest_deployment_record = get_deployment_record(latest_deployment)
-                .context("Failed to parse latest deployment into savable record")?;
-
-            let serialized_latest_deploy = serde_json::to_string_pretty(&latest_deployment_record)
-                .context("Failed to convert latest deployment record to string")?;
-
-            let records_content = fs::read_to_string(&deploy_history_path)
-                .context(format!("Failed to read {deploy_history_path:?}"))?;
-
-            let mut records: DeployHistory = serde_json::from_str(&records_content)
-                .context("Failed to parse records from disk")?;
-
-            if records.contains_key(&latest_deployment_record.change_list) {
-                log::info!("Deployment already saved to disk");
-                continue;
-            }
-
-            records.insert(
-                latest_deployment_record.change_list,
-                latest_deployment_record,
-            );
-
-            let serialized_records =
-                serde_json::to_string(&records).context("Failed to convert records to string")?;
-
-            fs::write(&deploy_history_path, &serialized_records)
-                .context("Failed to write deploy history to path")?;
-
-            let latest_deploy_path = channel_path.join("LatestDeploy.json");
-            fs::write(&latest_deploy_path, &serialized_latest_deploy)
-                .context("Failed to write latest deploy to path")?;
+        let deploy_history_path = channel_path.join("DeployHistory.json");
+        if !deploy_history_path.exists() {
+            fs::write(&deploy_history_path, b"{}\n").context(format!(
+                "Failed to create an empty DeployHistory at {deploy_history_path:?}"
+            ))?
         }
+
+        log::info!(
+            "Getting deployment info for {} {} at channel {}",
+            deployment_space.to_string(),
+            binary_type.to_string(),
+            channel_name.to_string()
+        );
+
+        let latest_deployment =
+            get_deployment_info(client, &base_url, &binary_type, &channel_name)
+                .await
+                .context("Failed to get latest deployment")?;
+
+        let latest_deployment_record = get_deployment_record(latest_deployment)
+            .context("Failed to parse latest deployment into savable record")?;
+
+        let serialized_latest_deploy = serde_json::to_string_pretty(&latest_deployment_record)
+            .context("Failed to convert latest deployment record to string")?;
+
+        let records_content = fs::read_to_string(&deploy_history_path)
+            .context(format!("Failed to read {deploy_history_path:?}"))?;
+
+        let mut records: DeployHistory = serde_json::from_str(&records_content)
+            .context("Failed to parse records from disk")?;
+
+        if records.contains_key(&latest_deployment_record.change_list) {
+            log::info!("Deployment already saved to disk");
+            continue;
+        }
+
+        records.insert(
+            latest_deployment_record.change_list,
+            latest_deployment_record,
+        );
+
+        let serialized_records =
+            serde_json::to_string(&records).context("Failed to convert records to string")?;
+
+        fs::write(&deploy_history_path, &serialized_records)
+            .context("Failed to write deploy history to path")?;
+
+        let latest_deploy_path = channel_path.join("LatestDeploy.json");
+        fs::write(&latest_deploy_path, &serialized_latest_deploy)
+            .context("Failed to write latest deploy to path")?;
     }
 
     Ok(())
