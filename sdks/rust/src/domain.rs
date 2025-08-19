@@ -32,7 +32,7 @@ impl ToString for PrimaryChannel {
 /// The difference between the `LIVE` and `zlive` channels is not totally clear. `LIVE` is the main release channel that
 /// should be used. `z` channels are typically internal, and `zlive` is most likely some kind of internal staging
 /// channel.
-pub const PRIMARY_CHANNELS: [PrimaryChannel; 4] = [
+pub const PRIMARY_CHANNELS: [PrimaryChannel; 1] = [
     PrimaryChannel::Live,
 ];
 
