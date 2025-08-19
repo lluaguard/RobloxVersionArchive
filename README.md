@@ -49,7 +49,7 @@ You can also access the latest deployment info in the `LatestDeploy.json` file.
 
 This repository is structured to allow straightforward access to whatever deployment you are looking for. Use the following URL as a template:
 
-`https://raw.githubusercontent.com/zov42/RobloxVersionArchive/main/{DEPLOYMENT_SPACE}/{BINARY_TYPE}/{CHANNEL}/{RECORD}`
+`https://raw.githubusercontent.com/lluaguard/RobloxVersionArchive/main/{DEPLOYMENT_SPACE}/{BINARY_TYPE}/{CHANNEL}/{RECORD}`
 
 The current supported values for each are:
 
